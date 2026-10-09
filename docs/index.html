@@ -8,12 +8,15 @@
 
     <meta property="og:title" content="¡Te invitaron a ganar premios!">
     <meta property="og:description" content="Descarga la app y empieza a ganar recompensas increíbles">
-    <meta property="og:image" content="{{REFESP_OG_IMAGE_URL}}">
+    <meta property="og:image" content="https://diar-dev.github.io/loyalty-app-referrals-refesp/assets/banner-refesp.jpg">
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:type" content="website">
 
-    <title>Únete a {{REFESP_APP_NAME}}</title>
+    <title>Únete a Monedero Espinoza</title>
+
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180.png">
 
     <style>
         * {
@@ -24,7 +27,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, {{REFESP_PRIMARY_COLOR}} 0%, {{REFESP_SECONDARY_COLOR}} 100%);
+            background: #0B0B0B;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -85,7 +88,7 @@
             bottom: 20px;
             right: 20px;
             background: white;
-            color: {{REFESP_PRIMARY_COLOR}};
+            color: #E71514;
             border-radius: 999px;
             padding: 0.75rem 1rem;
             font-size: 0.9rem;
@@ -119,7 +122,7 @@
 
         .cta-button {
             background: white;
-            color: {{REFESP_PRIMARY_COLOR}};
+            color: #E71514;
             border: none;
             padding: 1rem 2.5rem;
             font-size: 1.2rem;
@@ -152,8 +155,8 @@
         .spinner {
             width: 20px;
             height: 20px;
-            border: 3px solid rgba(102, 126, 234, 0.3);
-            border-top-color: {{REFESP_PRIMARY_COLOR}};
+            border: 3px solid rgba(231, 21, 20, 0.3);
+            border-top-color: #E71514;
             border-radius: 50%;
             animation: spin 1s linear infinite;
             display: none;
@@ -253,19 +256,19 @@
 <body>
     <div class="container">
         <img
-          src="{{REFESP_LOGO}}"
-          alt="{{REFESP_APP_NAME}}"
+          src="assets/logo-refesp.png"
+          alt="Monedero Espinoza"
           class="app-logo"
         />
         <!-- <div class="logo">🎁</div> -->
         <img
-          src="{{REFESP_BRANCH_BANNER_IMAGE}}"
+          src="assets/banner-refesp.jpg"
           alt="Sucursal Refaccionaria Espinoza"
           class="branch-banner"
         />
-        <h1>¡Te han invitado a {{REFESP_APP_NAME}}!</h1>
+        <h1>¡Te han invitado a Monedero Espinoza!</h1>
         <p class="subtitle">
-            {{REFESP_COPY_INTRO}}<br>
+            Es tu monedero electrónico de lealtad en Refaccionaria Espinoza, donde:<br>
 
             ✨ Acumulas puntos con cada compra<br>
             🎁 Canjeas cupones y descuentos exclusivos<br>
@@ -288,15 +291,16 @@
             💡 Al descargar la app, tu código de invitación se aplicará automáticamente
         </div>
 
-        <!-- {{REFESP_BRANCHES_SECTION}} — 5 sucursales de Refaccionaria Espinoza -->
         <div class="branches-box">
             <h2>📍 Nuestras sucursales</h2>
             <ul>
-                <li>{{REFESP_SUCURSAL_1_NOMBRE}} — {{REFESP_SUCURSAL_1_DIRECCION}}</li>
-                <li>{{REFESP_SUCURSAL_2_NOMBRE}} — {{REFESP_SUCURSAL_2_DIRECCION}}</li>
-                <li>{{REFESP_SUCURSAL_3_NOMBRE}} — {{REFESP_SUCURSAL_3_DIRECCION}}</li>
-                <li>{{REFESP_SUCURSAL_4_NOMBRE}} — {{REFESP_SUCURSAL_4_DIRECCION}}</li>
-                <li>{{REFESP_SUCURSAL_5_NOMBRE}} — {{REFESP_SUCURSAL_5_DIRECCION}}</li>
+                <li><strong>Matriz</strong> — 9 Oriente #2821, Carretera Federal a Tehuacán, Tecamachalco · 249 422 2590</li>
+                <li><strong>San José</strong> — 9 Oriente #2410, junto a la Ermita, Tecamachalco · 249 422 4721</li>
+                <li><strong>San Juan</strong> — Carretera federal km 53+200, frente a campos de Fútbol y Béisbol, Barrio de San Juan, Tecamachalco · 249 422 2204</li>
+                <li><strong>Tepeaca</strong> — Francisco I. Madero #619, Tepeaca · 223 113 2306</li>
+                <li><strong>San Lorenzo</strong> — Reforma #13, San Lorenzo Ometepec, a 150 mts del Entronque San Lorenzo-Tochtepec · 249 172 4129</li>
+                <li><strong>Acozac</strong> — Km 5.5 Carretera a Xalapa, San Juan Acozac, a 200 mts del Entronque Calderón-Los Reyes de Juárez · 249 688 6962</li>
+                <li><strong>Palmarito</strong> — Av 11 Sur #802, entre 5 y 7 Pte., Palmarito Tochapan, Pue. · 249 130 4237</li>
             </ul>
         </div>
 
@@ -309,11 +313,11 @@
     <script>
         // Configuración
         const CONFIG = {
-            androidPackageId: '{{REFESP_ANDROID_PACKAGE_ID}}',
-            iosAppId: '{{REFESP_IOS_APP_ID}}', // ⚠️ Cambiar cuando tengas el App Store ID
+            androidPackageId: 'com.diarsoluciones.walletRefEsp',
+            iosAppId: '6758105319',
             playStoreUrl: 'https://play.google.com/store/apps/details',
             appStoreUrl: 'https://apps.apple.com/app',
-            debugMode: true // Cambiar a false en producción
+            debugMode: false // Cambiar a true solo para depuración
         };
 
         let linkId = null;
