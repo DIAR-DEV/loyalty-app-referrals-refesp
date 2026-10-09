@@ -1,0 +1,567 @@
+<!-- docs/index.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta property="og:title" content="¡Te invitaron a ganar premios!">
+    <meta property="og:description" content="Descarga la app y empieza a ganar recompensas increíbles">
+    <meta property="og:image" content="{{REFESP_OG_IMAGE_URL}}">
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:type" content="website">
+
+    <title>Únete a {{REFESP_APP_NAME}}</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, {{REFESP_PRIMARY_COLOR}} 0%, {{REFESP_SECONDARY_COLOR}} 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding: 1rem;
+        }
+
+        .app-logo {
+            width: 160px;
+            max-width: 70%;
+            margin: 0 auto 1.5rem;
+            display: block;
+        }
+
+        .branch-banner {
+            width: 100%;
+            max-width: 480px;
+            border-radius: 16px;
+            margin: 0 auto 1.5rem;
+            display: block;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .container {
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 2rem;
+            background: white;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            color: {{REFESP_PRIMARY_COLOR}};
+            border-radius: 999px;
+            padding: 0.75rem 1rem;
+            font-size: 0.9rem;
+            font-weight: 700;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            gap: 0.4rem;
+            z-index: 999;
+            animation: pulse 1.5s infinite;
+        }
+
+        .scroll-indicator span {
+            font-size: 1.2rem;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+            100% { transform: scale(1); }
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+            text-align: left;
+            line-height: 1.5;
+        }
+
+        .cta-button {
+            background: white;
+            color: {{REFESP_PRIMARY_COLOR}};
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.4);
+        }
+
+        .cta-button:active {
+            transform: translateY(0);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .cta-button.loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(102, 126, 234, 0.3);
+            border-top-color: {{REFESP_PRIMARY_COLOR}};
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: none;
+        }
+
+        .cta-button.loading .spinner {
+            display: inline-block;
+        }
+
+        .cta-button.loading .button-text {
+            display: none;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .status-message {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            display: none;
+        }
+
+        .status-message.success {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid rgba(76, 175, 80, 0.5);
+            display: block;
+        }
+
+        .status-message.error {
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid rgba(244, 67, 54, 0.5);
+            display: block;
+        }
+
+        .info-box {
+            background: rgba(255,255,255,0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .branches-box {
+            background: rgba(255,255,255,0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+            text-align: left;
+        }
+
+        .branches-box h2 {
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+            text-align: center;
+        }
+
+        .branches-box ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .branches-box li {
+            line-height: 1.4;
+        }
+
+        .debug {
+            background: rgba(0,0,0,0.3);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            text-align: left;
+            font-family: 'Courier New', monospace;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .platform-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img
+          src="{{REFESP_LOGO}}"
+          alt="{{REFESP_APP_NAME}}"
+          class="app-logo"
+        />
+        <!-- <div class="logo">🎁</div> -->
+        <img
+          src="{{REFESP_BRANCH_BANNER_IMAGE}}"
+          alt="Sucursal Refaccionaria Espinoza"
+          class="branch-banner"
+        />
+        <h1>¡Te han invitado a {{REFESP_APP_NAME}}!</h1>
+        <p class="subtitle">
+            {{REFESP_COPY_INTRO}}<br>
+
+            ✨ Acumulas puntos con cada compra<br>
+            🎁 Canjeas cupones y descuentos exclusivos<br>
+            🎰 Giras la ruleta y ganas premios sorpresa<br>
+            📱 Llevas todo en tu celular, sin tarjetas físicas<br>
+            🔔 Te avisamos de promociones y ofertas especiales<br>
+            📍 Encuentras sucursales cercanas fácilmente
+        </p>
+
+        <button id="downloadBtn" class="cta-button">
+            <span class="button-text" id="buttonText">Descargar App</span>
+            <div class="spinner"></div>
+        </button>
+
+        <div id="platformBadge" class="platform-badge" style="display: none;"></div>
+
+        <div id="statusMessage" class="status-message"></div>
+
+        <div class="info-box">
+            💡 Al descargar la app, tu código de invitación se aplicará automáticamente
+        </div>
+
+        <!-- {{REFESP_BRANCHES_SECTION}} — 5 sucursales de Refaccionaria Espinoza -->
+        <div class="branches-box">
+            <h2>📍 Nuestras sucursales</h2>
+            <ul>
+                <li>{{REFESP_SUCURSAL_1_NOMBRE}} — {{REFESP_SUCURSAL_1_DIRECCION}}</li>
+                <li>{{REFESP_SUCURSAL_2_NOMBRE}} — {{REFESP_SUCURSAL_2_DIRECCION}}</li>
+                <li>{{REFESP_SUCURSAL_3_NOMBRE}} — {{REFESP_SUCURSAL_3_DIRECCION}}</li>
+                <li>{{REFESP_SUCURSAL_4_NOMBRE}} — {{REFESP_SUCURSAL_4_DIRECCION}}</li>
+                <li>{{REFESP_SUCURSAL_5_NOMBRE}} — {{REFESP_SUCURSAL_5_DIRECCION}}</li>
+            </ul>
+        </div>
+
+        <div id="debug" class="debug"></div>
+    </div>
+    <div id="scrollIndicator" class="scroll-indicator">
+        <span>⬇️</span> Descargar
+    </div>
+
+    <script>
+        // Configuración
+        const CONFIG = {
+            androidPackageId: '{{REFESP_ANDROID_PACKAGE_ID}}',
+            iosAppId: '{{REFESP_IOS_APP_ID}}', // ⚠️ Cambiar cuando tengas el App Store ID
+            playStoreUrl: 'https://play.google.com/store/apps/details',
+            appStoreUrl: 'https://apps.apple.com/app',
+            debugMode: true // Cambiar a false en producción
+        };
+
+        let linkId = null;
+        let platform = 'unknown';
+
+        function log(message) {
+            console.log(message);
+            if (CONFIG.debugMode) {
+                const debugDiv = document.getElementById('debug');
+                debugDiv.style.display = 'block';
+                debugDiv.innerHTML += `${new Date().toLocaleTimeString()}: ${message}<br>`;
+                debugDiv.scrollTop = debugDiv.scrollHeight;
+            }
+        }
+
+        function showStatus(message, type = 'success') {
+            const statusDiv = document.getElementById('statusMessage');
+            statusDiv.textContent = message;
+            statusDiv.className = `status-message ${type}`;
+        }
+
+        function hideStatus() {
+            const statusDiv = document.getElementById('statusMessage');
+            statusDiv.className = 'status-message';
+        }
+
+        // Extraer el parámetro 'ref' de la URL
+        function getReferralCode() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('ref');
+        }
+
+        // Detectar plataforma
+        function detectPlatform() {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+            if (/android/i.test(userAgent)) {
+                return 'android';
+            }
+
+            if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                return 'ios';
+            }
+
+            return 'desktop';
+        }
+
+        // Copiar al clipboard para iOS
+        async function copyToClipboard(text) {
+            log('Intentando copiar al clipboard...');
+
+            try {
+                //Clipboard API moderna
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    await navigator.clipboard.writeText(text);
+                    log('Copiado con Clipboard API');
+                    return true;
+                }
+            } catch (err) {
+                log(`Clipboard API falló: ${err.message}`);
+            }
+
+            // Fallback con textarea
+            try {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.top = '0';
+                textarea.style.left = '0';
+                textarea.style.width = '2em';
+                textarea.style.height = '2em';
+                textarea.style.padding = '0';
+                textarea.style.border = 'none';
+                textarea.style.outline = 'none';
+                textarea.style.boxShadow = 'none';
+                textarea.style.background = 'transparent';
+
+                document.body.appendChild(textarea);
+                textarea.focus();
+                textarea.select();
+
+                const successful = document.execCommand('copy');
+                document.body.removeChild(textarea);
+
+                if (successful) {
+                    log('Copiado con execCommand (fallback)');
+                    return true;
+                } else {
+                    log('execCommand falló');
+                    return false;
+                }
+            } catch (err) {
+                log(`Fallback falló: ${err.message}`);
+                return false;
+            }
+        }
+
+        // Manejar descarga para Android
+        async function handleAndroidDownload() {
+            log('Procesando descarga para Android');
+
+            const referrerParam = `linkId=${encodeURIComponent(linkId)}`;
+            const playStoreUrl = `${CONFIG.playStoreUrl}?id=${CONFIG.androidPackageId}&referrer=${encodeURIComponent(referrerParam)}`;
+
+            log(`URL: ${playStoreUrl}`);
+
+            showStatus('Redirigiendo a Play Store...', 'success');
+
+            setTimeout(() => {
+                window.location.href = playStoreUrl;
+            }, 1000);
+        }
+
+        // Manejar descarga para iOS
+        async function handleIOSDownload() {
+            log('Procesando descarga para iOS');
+
+            const clipboardText = `REFERRAL:${linkId}`;
+            log(`Texto a copiar: ${clipboardText}`);
+
+            // Copiar al clipboard
+            const copied = await copyToClipboard(clipboardText);
+
+            if (copied) {
+                showStatus('Código de invitación copiado. Redirigiendo...', 'success');
+            } else {
+                showStatus('No se pudo copiar automáticamente. Redirigiendo...', 'error');
+            }
+
+            const appStoreUrl = `${CONFIG.appStoreUrl}/${CONFIG.iosAppId}`;
+            log(`URL: ${appStoreUrl}`);
+
+            setTimeout(() => {
+                window.location.href = appStoreUrl;
+            }, 1500);
+        }
+
+        // Manejar click del botón
+        async function handleDownload() {
+            log('Botón presionado');
+
+            const button = document.getElementById('downloadBtn');
+            button.classList.add('loading');
+
+            try {
+                if (platform === 'android') {
+                    await handleAndroidDownload();
+                } else if (platform === 'ios') {
+                    await handleIOSDownload();
+                } else {
+                    showStatus('Por favor abre este link desde un dispositivo móvil (Android o iOS)', 'error');
+                    button.classList.remove('loading');
+                }
+            } catch (error) {
+                log(`Error: ${error.message}`);
+                showStatus('Ocurrió un error. Por favor intenta de nuevo.', 'error');
+                button.classList.remove('loading');
+            }
+        }
+
+        // Inicializar página
+        function init() {
+            log('Inicializando página...');
+
+            // 1. Obtener linkId
+            linkId = getReferralCode();
+
+            if (!linkId) {
+                log('No se encontró parámetro ref en la URL');
+                showStatus('Link inválido. Por favor solicita un nuevo link de invitación.', 'error');
+                document.getElementById('downloadBtn').disabled = true;
+                return;
+            }
+
+            log(`LinkId encontrado: ${linkId}`);
+
+            // Detectar plataforma
+            platform = detectPlatform();
+            log(`Plataforma detectada: ${platform}`);
+
+            // Actualizar UI según plataforma
+            const button = document.getElementById('downloadBtn');
+            const badge = document.getElementById('platformBadge');
+
+            if (platform === 'android') {
+                button.innerHTML = '<span class="button-text">Descargar en Play Store</span><div class="spinner"></div>';
+                badge.textContent = '🤖 Android';
+                badge.style.display = 'inline-block';
+            } else if (platform === 'ios') {
+                button.innerHTML = '<span class="button-text">Descargar en App Store</span><div class="spinner"></div>';
+                badge.textContent = '🍎 iOS';
+                badge.style.display = 'inline-block';
+            } else {
+                button.innerHTML = '<span class="button-text">Abrir en móvil</span><div class="spinner"></div>';
+                showStatus('Por favor abre este link desde tu teléfono móvil', 'error');
+            }
+
+            // Agregar event listener al botón
+            button.addEventListener('click', handleDownload);
+
+            // Scroll indicator
+            window.addEventListener('scroll', handleScrollIndicator);
+            window.addEventListener('resize', handleScrollIndicator);
+
+            document
+              .getElementById('scrollIndicator')
+              .addEventListener('click', scrollToDownload);
+
+            // Ejecutar una vez al inicio
+            handleScrollIndicator();
+
+            log('Inicialización completa');
+        }
+
+        // Ejecutar al cargar la página
+        window.addEventListener('load', init);
+
+
+        function isElementInViewport(el) {
+            const rect = el.getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
+            );
+        }
+
+        function handleScrollIndicator() {
+            const downloadBtn = document.getElementById('downloadBtn');
+            const indicator = document.getElementById('scrollIndicator');
+
+            if (!downloadBtn) return;
+
+            if (isElementInViewport(downloadBtn)) {
+                indicator.style.display = 'none';
+            } else {
+                indicator.style.display = 'flex';
+            }
+        }
+
+        function scrollToDownload() {
+            const downloadBtn = document.getElementById('downloadBtn');
+            if (!downloadBtn) return;
+
+            downloadBtn.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+        }
+    </script>
+</body>
+</html>
